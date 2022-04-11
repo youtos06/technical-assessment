@@ -18,8 +18,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserMapper userMapper;
+
 
     public UserService() {
     }
@@ -29,7 +28,7 @@ public class UserService {
         if (users.isEmpty()){
             throw new BusinessApiException(String.format("No users with the following name : %s",name), HttpStatus.NOT_FOUND);
         }
-        return users.stream().map(user -> userMapper.mapUserDtoFromUser(user)).collect(Collectors.toList());
+        return users.stream().map(user -> UserMapper.mapUserDtoFromUser(user)).collect(Collectors.toList());
     }
 
     public List<UserDto> retrieveAllUsers(){
@@ -37,7 +36,7 @@ public class UserService {
         if (users.isEmpty()){
             throw new BusinessApiException(String.format("No user is currently saved"), HttpStatus.OK);
         }
-        return users.stream().map(user -> userMapper.mapUserDtoFromUser(user)).collect(Collectors.toList());
+        return users.stream().map(user -> UserMapper.mapUserDtoFromUser(user)).collect(Collectors.toList());
     }
 
     public UserDto retrieveUserById(long id){
@@ -45,7 +44,7 @@ public class UserService {
         if (userOptional.isEmpty()){
             throw new BusinessApiException(String.format("No users with the following id: %s",id), HttpStatus.NOT_FOUND);
         }
-        return userMapper.mapUserDtoFromUser(userOptional.get());
+        return UserMapper.mapUserDtoFromUser(userOptional.get());
     }
 
     public void saveUser(UserDto userDto){
@@ -58,7 +57,7 @@ public class UserService {
                             userDto.getBirthDate()),
                     HttpStatus.CONFLICT);
         }
-        User user = userMapper.mapUserFromUserDto(userDto);
+        User user = UserMapper.mapUserFromUserDto(userDto);
         userRepository.save(user);
     }
 }

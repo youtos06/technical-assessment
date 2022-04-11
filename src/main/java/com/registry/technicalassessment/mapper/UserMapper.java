@@ -4,10 +4,9 @@ import com.registry.technicalassessment.dto.UserDto;
 import com.registry.technicalassessment.model.User;
 import org.springframework.stereotype.Component;
 
-@Component
 public class UserMapper {
 
-    public User mapUserFromUserDto(UserDto userDto){
+    public static User mapUserFromUserDto(UserDto userDto){
         if (userDto == null){
             return null;
         }
@@ -21,7 +20,7 @@ public class UserMapper {
         return user;
     }
 
-    public UserDto mapUserDtoFromUser(User user){
+    public static UserDto mapUserDtoFromUser(User user){
         if (user == null){
             return null;
         }
