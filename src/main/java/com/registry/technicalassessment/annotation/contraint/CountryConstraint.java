@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CountryConstraint {
-    String message() default "Invalid country";
+    String message() default "Invalid user field - country";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

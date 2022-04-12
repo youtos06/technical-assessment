@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GenderConstraint {
-    String message() default "Invalid gender";
+    String message() default "Invalid user field -  gender";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

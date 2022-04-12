@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AdultConstraint {
-    String message() default "Invalid non adult age";
+    String message() default "Invalid user field - non adult age";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
