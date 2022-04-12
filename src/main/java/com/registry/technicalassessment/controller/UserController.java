@@ -55,7 +55,6 @@ public class UserController {
     @LogExecutionTime
     @ApiOperation(value = "Register a new user")
     public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto) {
-        userService.saveUser(userDto);
-        return new ResponseEntity<>(userDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(userDto), HttpStatus.CREATED);
     }
 }

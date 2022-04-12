@@ -14,9 +14,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.lang.reflect.Parameter;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -102,6 +108,24 @@ public class UserControllerTest {
     public void shouldSaveUser() throws Exception {
         objectMapper.registerModule(new JSR310Module());
 
+
+        UserDto userDto_1 = new UserDto();
+        userDto_1.setName("youness");
+        userDto_1.setCountry("france");
+        userDto_1.setBirthDate(LocalDate.of(1997,7,14));
+        userDto_1.setPhoneNumber("+363798876543");
+        when(userService.saveUser(any(UserDto.class))).thenReturn(userDto_1);
+        mockMvc.perform(post(ApiPath.USER)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userDto_1)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value("youness"));
+    }
+
+    @Test
+    public void shouldNotSaveUserWithSameNameAndBirthDate() throws Exception {
+        objectMapper.registerModule(new JSR310Module());
+
         UserDto userDto_1 = new UserDto();
         userDto_1.setName("youness");
         userDto_1.setCountry("france");
@@ -111,15 +135,22 @@ public class UserControllerTest {
         mockMvc.perform(post(ApiPath.USER)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDto_1)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value("youness"));
-    }
+                .andExpect(status().isCreated());
 
-    @Test
-    public void shouldNotWithSaveUserWithSameNameAndBirthDate() throws Exception {
-        // TODO
+        when(userService.saveUser(any(UserDto.class))).thenThrow(
+                new BusinessApiException(
+                        String.format("found a user with same with the following name  %s and birth date %s",
+                                userDto_1.getName(),
+                                userDto_1.getBirthDate()),
+                        HttpStatus.CONFLICT)
+        );
+        mockMvc.perform(post(ApiPath.USER)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userDto_1)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value(100));
     }
-
+    
 
     private List<UserDto> getUsersDto(){
         UserDto userDto_1 = new UserDto();

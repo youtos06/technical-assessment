@@ -47,7 +47,7 @@ public class UserService {
         return UserMapper.mapUserDtoFromUser(userOptional.get());
     }
 
-    public void saveUser(UserDto userDto){
+    public UserDto saveUser(UserDto userDto){
         List<User> users = userRepository.findUserByNameAndBirthDate(userDto.getName(),userDto.getBirthDate());
         // Heavy check - can be avoided depending on business logic
         if (!users.isEmpty()){
@@ -58,6 +58,6 @@ public class UserService {
                     HttpStatus.CONFLICT);
         }
         User user = UserMapper.mapUserFromUserDto(userDto);
-        userRepository.save(user);
+        return UserMapper.mapUserDtoFromUser(userRepository.save(user));
     }
 }
