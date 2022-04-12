@@ -1,0 +1,2 @@
+insert INTO User (id,name,birth_date,country,gender,phone_number) VALUES (1,'youness','1997-07-14','fr','male','+21260009884');
+insert INTO User (id,name,birth_date,country,gender,phone_number) VALUES (2,'eddy','1990-07-14','france','male','+37360009884');

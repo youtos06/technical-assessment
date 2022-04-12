@@ -1,0 +1,312 @@
+{
+	"info": {
+		"_postman_id": "a66eb95e-4778-4401-9c9d-232aaff28104",
+		"name": "User Registery",
+		"description": "Air France Technical Test Postman Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				},
+				"description": "Get All Users"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1"
+					]
+				},
+				"description": "Get one user by Id (Primary key)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Id - wrong Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1"
+					]
+				},
+				"description": "Get one user by Id (Primary key)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users by Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user?name=youness",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "youness"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register a user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"zoro\",\r\n    \"birthDate\": \"2000-01-14\",\r\n    \"country\": \"fr\",\r\n    \"gender\": \"male\",\r\n    \"phoneNumber\": \"+21260009884\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				},
+				"description": "Save a new User"
+			},
+			"response": []
+		},
+		{
+			"name": "Register a user - only Mandatory Fields",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"zoro\",\r\n    \"birthDate\": \"2000-01-14\",\r\n    \"country\": \"fr\",\r\n    \"gender\": \"male\",\r\n    \"phoneNumber\": \"+21260009884\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				},
+				"description": "Save a new User"
+			},
+			"response": []
+		},
+		{
+			"name": "Register a user Failed Validation Gender",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"zoro gender\",\r\n    \"birthDate\": \"2000-01-14\",\r\n    \"country\": \"fr\",\r\n    \"gender\": \"no gender\",\r\n    \"phoneNumber\": \"+21260009884\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register a user Failed Validation Missing Mandatory Field",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"zoro gender\",\r\n    \"birthDate\": \"2000-01-14\",\r\n    \"country\": \"fr\",\r\n    \"gender\": \"no gender\",\r\n    \"phoneNumber\": \"+21260009884\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register a user Failed Validation Non Adult",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"zoro noadult\",\r\n    \"birthDate\": \"2018-01-14\",\r\n    \"country\": \"fr\",\r\n    \"gender\": \"male\",\r\n    \"phoneNumber\": \"+21260009884\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register a user Failed Validation Invalid Phone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"zoro phone\",\r\n    \"birthDate\": \"2000-01-14\",\r\n    \"country\": \"fr\",\r\n    \"gender\": \"male\",\r\n    \"phoneNumber\": \"06 phone\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register a user Failed Validation Non French",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"zoro nonFrench\",\r\n    \"birthDate\": \"2000-01-14\",\r\n    \"country\": \"morocco\",\r\n    \"gender\": \"male\",\r\n    \"phoneNumber\": \"+21260009884\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register a user - Fail Already in DB",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"youness\",\r\n        \"birthDate\": \"1997-07-14\",\r\n        \"country\": \"fr\",\r\n        \"gender\": \"male\",\r\n        \"phoneNumber\": \"+21260009884\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				},
+				"description": "Save a new User fail since there is already same user in database\r\n    -> Same Name\r\n    -> Same birth date"
+			},
+			"response": []
+		}
+	]
+}
