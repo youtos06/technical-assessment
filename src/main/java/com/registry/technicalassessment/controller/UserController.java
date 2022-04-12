@@ -6,6 +6,7 @@ import com.registry.technicalassessment.holder.ApiPath;
 import com.registry.technicalassessment.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,10 +18,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = ApiPath.USER)
+@AllArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @RequestMapping(
             method = RequestMethod.GET,

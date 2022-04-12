@@ -5,7 +5,7 @@ import com.registry.technicalassessment.exception.BusinessApiException;
 import com.registry.technicalassessment.mapper.UserMapper;
 import com.registry.technicalassessment.model.User;
 import com.registry.technicalassessment.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +14,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
 
+    private final UserRepository userRepository;
 
-
-    public UserService() {
-    }
 
     public List<UserDto> retrieveUserByName(String name){
         List<User> users = userRepository.findUserByName(name);
