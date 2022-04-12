@@ -150,7 +150,7 @@ public class UserControllerTest {
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.code").value(100));
     }
-    
+
 
     private List<UserDto> getUsersDto(){
         UserDto userDto_1 = new UserDto();

@@ -30,7 +30,7 @@ public class UserServiceTest {
 
 
     @Test
-    public void retrieveAllUsers_test() {
+    public void shouldReturnAllUsers() {
         List<UserDto> mockUsersDto = getUsersDto();
         List<User> mockUsers = getUsers();
 
@@ -44,7 +44,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void retrieveAllUsersByName_test(){
+    public void shouldReturnUsersByName(){
         String name = "youness";
         List<UserDto> mockUsersDto = getUsersDto()
                 .stream()
@@ -64,7 +64,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void retrieveUserById(){
+    public void shouldReturnUserById(){
         long id = 1;
         UserDto mockUserDto = getUsersDto().get(0);
         User mockUser = getUsers().get(0);

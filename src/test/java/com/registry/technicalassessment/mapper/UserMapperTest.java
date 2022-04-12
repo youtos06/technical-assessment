@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 public class UserMapperTest {
 
     @Test
-    void mapUserFromUserDto_test() {
+    public void shouldReturnUserDtoFromUSer() {
         UserDto userDto_1 = new UserDto();
         userDto_1.setName("youness");
         userDto_1.setCountry("france");
@@ -35,7 +35,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void mapUserFromUserDtoCaseNull_test(){
+    public void shouldReturnNullDtoForNullUser(){
         User user = null;
 
         UserDto userDto = UserMapper.mapUserDtoFromUser(user);
@@ -44,7 +44,7 @@ public class UserMapperTest {
     }
 
     @Test
-    void mapUserDtoFromUser_test() {
+    public void shouldReturnUserFromUserDto() {
         UserDto userDto_1 = new UserDto();
         userDto_1.setName("youness");
         userDto_1.setCountry("france");
@@ -65,7 +65,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void mapUserDtoFromUserCaseNull_test(){
+    public void shouldReturnNullUserFromNullDto(){
         UserDto userDto = null;
 
         User user = UserMapper.mapUserFromUserDto(userDto);
