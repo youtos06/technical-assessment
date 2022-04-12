@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -72,6 +73,19 @@ public class UserServiceTest {
         when(userRepository.findById(id)).thenReturn(Optional.of(mockUser));
 
         UserDto userDto = userService.retrieveUserById(id);
+
+        assertEquals(userDto.getName(),mockUserDto.getName());
+        assertEquals(userDto.getBirthDate(),mockUser.getBirthDate());
+    }
+
+    @Test
+    public void shouldSaveUser(){
+        UserDto mockUserDto = getUsersDto().get(0);
+        User mockUser = getUsers().get(0);
+
+        when(userRepository.save(any(User.class))).thenReturn(mockUser);
+
+        UserDto userDto = userService.saveUser(mockUserDto);
 
         assertEquals(userDto.getName(),mockUserDto.getName());
         assertEquals(userDto.getBirthDate(),mockUser.getBirthDate());
