@@ -4,6 +4,8 @@ import com.registry.technicalassessment.annotation.LogExecutionTime;
 import com.registry.technicalassessment.dto.UserDto;
 import com.registry.technicalassessment.holder.ApiPath;
 import com.registry.technicalassessment.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,7 +26,8 @@ public class UserController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @LogExecutionTime
-    public ResponseEntity<List<UserDto>> getUsers(@RequestParam(required = false) String name) {
+    @ApiOperation(value = "Retrieve all users or users with specific name")
+    public ResponseEntity<List<UserDto>> getUsers(@ApiParam("Filter users by name") @RequestParam(required = false) String name) {
         List<UserDto> users;
         if (name != null) {
             users = userService.retrieveUserByName(name);
@@ -39,6 +42,7 @@ public class UserController {
             value = ApiPath.USER_BY_ID,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @LogExecutionTime
+    @ApiOperation(value = "Retrieve user by Id")
     public ResponseEntity<UserDto> getUserById(@PathVariable long id) {
         UserDto user = userService.retrieveUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -49,6 +53,7 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @LogExecutionTime
+    @ApiOperation(value = "Register a new user")
     public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto) {
         userService.saveUser(userDto);
         return new ResponseEntity<>(userDto, HttpStatus.CREATED);
