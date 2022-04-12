@@ -1,7 +1,6 @@
 package com.registry.technicalassessment.service;
 
 import com.registry.technicalassessment.dto.UserDto;
-import com.registry.technicalassessment.mapper.UserMapper;
 import com.registry.technicalassessment.model.User;
 import com.registry.technicalassessment.repository.UserRepository;
 import org.junit.Test;
