@@ -18,7 +18,9 @@ This Project is based on Spring Boot and Java 11, with following Features:
     * Postman collection ([link](./User%20Registery.postman_collection.json))
 * Testing
     * Junit & Mockito
-    * BDD : cucumber based on CucumberTest.java run
+    * BDD : cucumber based on [CucumberTest.java](./src/test/java/com/registry/bdd/CucumberTest.java) run
+        * For Intellij add [package](https://plugins.jetbrains.com/plugin/7212-cucumber-for-java)
+        * Scenario is under [registeruser.feature](./src/test/resources/registeruser.feature)
 * Spring Validation
 
 ## Running the project
