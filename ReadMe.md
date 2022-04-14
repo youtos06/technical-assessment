@@ -18,6 +18,7 @@ This Project is based on Spring Boot and Java 11, with following Features:
     * Postman collection ([link](./User%20Registery.postman_collection.json))
 * Testing
     * Junit & Mockito
+    * BDD : cucumber based on CucumberTest.java run
 * Spring Validation
 
 ## Running the project
