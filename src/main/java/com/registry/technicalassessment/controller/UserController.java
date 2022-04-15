@@ -7,7 +7,6 @@ import com.registry.technicalassessment.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +22,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @RequestMapping(
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @LogExecutionTime
     @ApiOperation(value = "Retrieve all users or users with specific name")
     public ResponseEntity<List<UserDto>> getUsers(@ApiParam("Filter users by name") @RequestParam(required = false) String name) {
@@ -38,8 +35,7 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @RequestMapping(
-            method = RequestMethod.GET,
+    @GetMapping(
             value = ApiPath.USER_BY_ID,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @LogExecutionTime
@@ -49,8 +45,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(
-            method = RequestMethod.POST,
+    @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @LogExecutionTime

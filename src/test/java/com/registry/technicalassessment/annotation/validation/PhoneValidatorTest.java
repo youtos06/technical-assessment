@@ -44,7 +44,7 @@ public class PhoneValidatorTest {
 
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
-        assertEquals(violations.iterator().next().getMessage(),
-                "Invalid user field -  phone Number");
+        assertEquals("Invalid user field -  phone Number",violations.iterator().next().getMessage());
+
     }
 }

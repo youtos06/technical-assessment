@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 public class CountryValidator implements ConstraintValidator<CountryConstraint, String> {
     @Override
     public void initialize(CountryConstraint constraintAnnotation) {
-
+        // Init
     }
 
     @Override

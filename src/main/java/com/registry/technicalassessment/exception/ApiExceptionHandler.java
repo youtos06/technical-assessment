@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 
 @ControllerAdvice
@@ -29,25 +30,27 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
-    public ResponseEntity<Object> handleMethodArgumentTypeMismatchException (MethodArgumentTypeMismatchException ex){
+    public ResponseEntity<ApiExceptionResponse> handleMethodArgumentTypeMismatchException (MethodArgumentTypeMismatchException ex){
         logger.error(ex.getMessage());
         ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse(
                 ex.getMessage(),
                 101,
                 ZonedDateTime.now()
         );
-        return new ResponseEntity(apiExceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiExceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<Object> MethodArgumentNotValidException(MethodArgumentNotValidException ex){
-        logger.error(ex.getBindingResult().getFieldError().getDefaultMessage());
+    public ResponseEntity<ApiExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
+        String message = Objects.requireNonNull(ex.getBindingResult().getFieldError(),"Invalid parameter")
+                .getDefaultMessage();
+        logger.error(message);
         ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse(
-                ex.getBindingResult().getFieldError().getDefaultMessage(),
+                message,
                 102,
                 ZonedDateTime.now()
         );
-        return new ResponseEntity(apiExceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiExceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
 }

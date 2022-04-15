@@ -1,6 +1,7 @@
 package com.registry.technicalassessment.service;
 
 import com.registry.technicalassessment.dto.UserDto;
+import com.registry.technicalassessment.mapper.UserMapper;
 import com.registry.technicalassessment.model.User;
 import com.registry.technicalassessment.repository.UserRepository;
 import org.junit.Test;
@@ -28,6 +29,9 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private UserMapper userMapper;
+
 
 
     @Test
@@ -36,7 +40,8 @@ public class UserServiceTest {
         List<User> mockUsers = getUsers();
 
         when(userRepository.findAll()).thenReturn(mockUsers);
-
+        when(userMapper.userToUserDto(mockUsers.get(0))).thenReturn(mockUsersDto.get(0));
+        when(userMapper.userToUserDto(mockUsers.get(1))).thenReturn(mockUsersDto.get(1));
 
         List<UserDto> usersDto = userService.retrieveAllUsers();
 
@@ -57,6 +62,7 @@ public class UserServiceTest {
                 .collect(Collectors.toList());
 
         when(userRepository.findUserByName(name)).thenReturn(mockUsers);
+        when(userMapper.userToUserDto(mockUsers.get(0))).thenReturn(mockUsersDto.get(0));
 
         List<UserDto> usersDto = userService.retrieveUserByName(name);
 
@@ -71,6 +77,7 @@ public class UserServiceTest {
         User mockUser = getUsers().get(0);
 
         when(userRepository.findById(id)).thenReturn(Optional.of(mockUser));
+        when(userMapper.userToUserDto(mockUser)).thenReturn(mockUserDto);
 
         UserDto userDto = userService.retrieveUserById(id);
 
@@ -84,7 +91,8 @@ public class UserServiceTest {
         User mockUser = getUsers().get(0);
 
         when(userRepository.save(any(User.class))).thenReturn(mockUser);
-
+        when(userMapper.userDtoToUser(mockUserDto)).thenReturn(mockUser);
+        when(userMapper.userToUserDto(any(User.class))).thenReturn(mockUserDto);
         UserDto userDto = userService.saveUser(mockUserDto);
 
         assertEquals(userDto.getName(),mockUserDto.getName());

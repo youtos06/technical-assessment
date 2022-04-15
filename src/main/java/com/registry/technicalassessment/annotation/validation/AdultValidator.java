@@ -11,7 +11,7 @@ import java.util.Objects;
 public class AdultValidator implements ConstraintValidator<AdultConstraint, LocalDate> {
     @Override
     public void initialize(AdultConstraint constraintAnnotation) {
-
+        //Init
     }
 
     @Override

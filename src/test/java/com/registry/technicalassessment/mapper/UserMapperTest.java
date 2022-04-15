@@ -3,18 +3,22 @@ package com.registry.technicalassessment.mapper;
 import com.registry.technicalassessment.dto.UserDto;
 import com.registry.technicalassessment.model.User;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
-public class UserMapperTest {
+@SpringBootTest
+class UserMapperTest {
+
+    @Autowired
+    UserMapper userMapper;
 
     @Test
-    public void shouldReturnUserDtoFromUSer() {
+    void shouldReturnUserDtoFromUser() {
         UserDto userDto_1 = new UserDto();
         userDto_1.setName("youness");
         userDto_1.setCountry("france");
@@ -28,23 +32,19 @@ public class UserMapperTest {
         user_1.setBirthDate(LocalDate.of(1997,7,14));
         user_1.setPhoneNumber("+363798876543");
 
-        UserDto userDto = UserMapper.mapUserDtoFromUser(user_1);
+        UserDto userDto = userMapper.userToUserDto(user_1);
 
         assertEquals(userDto.getName(),user_1.getName());
         assertEquals(userDto.getBirthDate(),user_1.getBirthDate());
     }
 
     @Test
-    public void shouldReturnNullDtoForNullUser(){
-        User user = null;
-
-        UserDto userDto = UserMapper.mapUserDtoFromUser(user);
-
-        assertNull(userDto);
+    void shouldReturnNullDtoForNullUser(){
+        assertNull(userMapper.userToUserDto(null));
     }
 
     @Test
-    public void shouldReturnUserFromUserDto() {
+    void shouldReturnUserFromUserDto() {
         UserDto userDto_1 = new UserDto();
         userDto_1.setName("youness");
         userDto_1.setCountry("france");
@@ -58,18 +58,14 @@ public class UserMapperTest {
         user_1.setBirthDate(LocalDate.of(1997,7,14));
         user_1.setPhoneNumber("+363798876543");
 
-        User user = UserMapper.mapUserFromUserDto(userDto_1);
+        User user = userMapper.userDtoToUser(userDto_1);
 
         assertEquals(user.getName(),userDto_1.getName());
         assertEquals(user.getBirthDate(),userDto_1.getBirthDate());
     }
 
     @Test
-    public void shouldReturnNullUserFromNullDto(){
-        UserDto userDto = null;
-
-        User user = UserMapper.mapUserFromUserDto(userDto);
-
-        assertNull(user);
+    void shouldReturnNullUserFromNullDto(){
+        assertNull(userMapper.userToUserDto(null));
     }
 }

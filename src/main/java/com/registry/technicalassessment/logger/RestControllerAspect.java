@@ -27,8 +27,10 @@ public class RestControllerAspect {
     private ObjectMapper mapper;
 
     @Pointcut("within(com.registry.technicalassessment.controller..*) " +
-            "&& @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+            "&& @annotation(org.springframework.web.bind.annotation.GetMapping) " +
+            "&& @annotation(org.springframework.web.bind.annotation.PostMapping) ")
     public void pointcut() {
+        // Point cut for controller logging
     }
 
     @Before("pointcut()")

@@ -19,14 +19,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 @WebMvcTest(controllers = UserController.class)
-public class UserControllerTest {
+class UserControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -38,7 +38,7 @@ public class UserControllerTest {
 
 
     @Test
-    public void shouldReturnAllUsers() throws Exception {
+    void shouldReturnAllUsers() throws Exception {
         List<UserDto> usersDto = getUsersDto();
 
         when(userService.retrieveAllUsers()).thenReturn(usersDto);
@@ -49,7 +49,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnOneUserById() throws Exception {
+    void shouldReturnOneUserById() throws Exception {
         when(userService.retrieveUserById(1)).thenReturn(getUsersDto().get(0));
 
         mockMvc.perform(get(ApiPath.USER+ApiPath.USER_BY_ID,1))
@@ -58,7 +58,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnNotFoundForUserWrongId() throws Exception {
+    void shouldReturnNotFoundForUserWrongId() throws Exception {
         when(userService.retrieveUserById(10))
                 .thenThrow(new BusinessApiException(
                         String.format("No users with the following id: %s",10)
@@ -72,7 +72,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnUsersByName() throws Exception {
+    void shouldReturnUsersByName() throws Exception {
         String name = "youness";
         List<UserDto> usersDto = List.of(getUsersDto().get(0));
 
@@ -81,11 +81,12 @@ public class UserControllerTest {
         mockMvc.perform(get(ApiPath.USER)
                 .param("name",name))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(1));
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].name").value(name));
     }
 
     @Test
-    public void shouldReturnUserNotFoundByName() throws Exception {
+    void shouldReturnUserNotFoundByName() throws Exception {
         String name = "zoro";
 
         when(userService.retrieveUserByName(name)).thenThrow(
@@ -101,7 +102,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldSaveUser() throws Exception {
+    void shouldSaveUser() throws Exception {
         objectMapper.registerModule(new JSR310Module());
 
 
@@ -115,11 +116,11 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDto_1)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value("youness"));
+                .andExpect(jsonPath("$.country").value("france"));
     }
 
     @Test
-    public void shouldNotSaveUserWithSameNameAndBirthDate() throws Exception {
+    void shouldNotSaveUserWithSameNameAndBirthDate() throws Exception {
         objectMapper.registerModule(new JSR310Module());
 
         UserDto userDto_1 = new UserDto();

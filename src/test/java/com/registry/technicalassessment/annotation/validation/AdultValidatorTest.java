@@ -46,8 +46,7 @@ public class AdultValidatorTest {
 
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
-        assertEquals(violations.iterator().next().getMessage(),
-                "Invalid user field - non adult age");
+        assertEquals("Invalid user field - non adult age",violations.iterator().next().getMessage());
     }
 
 }

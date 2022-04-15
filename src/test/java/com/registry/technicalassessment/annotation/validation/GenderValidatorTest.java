@@ -44,7 +44,6 @@ public class GenderValidatorTest {
 
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
-        assertEquals(violations.iterator().next().getMessage(),
-                "Invalid user field -  gender");
+        assertEquals("Invalid user field -  gender",violations.iterator().next().getMessage());
     }
 }

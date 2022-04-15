@@ -42,7 +42,7 @@ public class CountryValidatorTest {
 
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
-        assertEquals(violations.iterator().next().getMessage(),
-                "Invalid user field - country");
+        assertEquals("Invalid user field - country",violations.iterator().next().getMessage());
+
     }
 }

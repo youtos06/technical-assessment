@@ -41,7 +41,6 @@ public class MandatoryPropertyValidatorTest {
 
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
-        assertEquals(violations.iterator().next().getMessage(),
-                "Name is mandatory");
+        assertEquals("Name is mandatory",violations.iterator().next().getMessage());
     }
 }

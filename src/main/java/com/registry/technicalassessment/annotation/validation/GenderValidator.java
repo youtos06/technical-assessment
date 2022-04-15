@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 public class GenderValidator implements ConstraintValidator<GenderConstraint,String> {
     @Override
     public void initialize(GenderConstraint constraintAnnotation) {
-
+        // Init
     }
 
     @Override
