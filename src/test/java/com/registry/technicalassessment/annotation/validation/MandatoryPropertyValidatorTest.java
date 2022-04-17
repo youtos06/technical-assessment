@@ -26,7 +26,7 @@ public class MandatoryPropertyValidatorTest {
     public void shouldBeValidUser(){
         UserDto userDto = new UserDto();
         userDto.setName("youness");
-        userDto.setCountry("france");
+        userDto.setCountry("FR");
         userDto.setBirthDate(LocalDate.of(1997,7,14));
 
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
@@ -36,7 +36,7 @@ public class MandatoryPropertyValidatorTest {
     @Test
     public void shouldNotBeValidUser(){
         UserDto userDto = new UserDto();
-        userDto.setCountry("france");
+        userDto.setCountry("FR");
         userDto.setBirthDate(LocalDate.of(1997,7,14));
 
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);

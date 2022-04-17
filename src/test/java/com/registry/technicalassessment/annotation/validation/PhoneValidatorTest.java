@@ -26,7 +26,7 @@ public class PhoneValidatorTest {
     public void shouldBeValidPhone(){
         UserDto userDto = new UserDto();
         userDto.setName("youness");
-        userDto.setCountry("france");
+        userDto.setCountry("FR");
         userDto.setPhoneNumber("+212699887766");
         userDto.setBirthDate(LocalDate.of(1997,7,14));
 
@@ -38,7 +38,7 @@ public class PhoneValidatorTest {
     public void shouldNotBeValidPhone(){
         UserDto userDto = new UserDto();
         userDto.setName("youness");
-        userDto.setCountry("fr");
+        userDto.setCountry("FR");
         userDto.setPhoneNumber("+212 abc");
         userDto.setBirthDate(LocalDate.of(1997,7,14));
 

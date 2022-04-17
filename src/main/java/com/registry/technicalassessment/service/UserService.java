@@ -5,6 +5,7 @@ import com.registry.technicalassessment.exception.BusinessApiException;
 import com.registry.technicalassessment.mapper.UserMapper;
 import com.registry.technicalassessment.model.User;
 import com.registry.technicalassessment.repository.UserRepository;
+import com.registry.technicalassessment.validator.UserValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final UserValidator userValidator;
 
     /**
      * Returns list of users in db that have a certain name
      *
      * @param name parameter of User
-     * @throws BusinessApiException if we found no user with the searched name and status Not Found
+     * @throws BusinessApiException if we found no user with the searched name and status NOT FOUND
      * @return list of users with name equal to name argument
      */
     public List<UserDto> retrieveUserByName(String name){
@@ -54,6 +56,7 @@ public class UserService {
      * Returns one user based on his ID
      *
      * @param id key of the user
+     * @throws BusinessApiException if no user with id and status NOT FOUND
      * @return user with id equal to id argument
      */
     public UserDto retrieveUserById(long id){
@@ -64,14 +67,26 @@ public class UserService {
         return userMapper.userToUserDto(userOptional.get());
     }
 
+    /**
+     * Save user in database if not exist
+     *
+     * @param userDto user details to be saved as user
+     * @throws BusinessApiException if the user already in database
+     * @return dto of user after it was saved
+     */
     public UserDto saveUser(UserDto userDto){
-        List<User> users = userRepository.findUserByNameAndBirthDate(userDto.getName(),userDto.getBirthDate());
+        userValidator.validate(userDto);
+        List<User> users = userRepository.findUserByNameAndBirthDateAndCountry_code(
+                userDto.getName(),
+                userDto.getBirthDate(),
+                userDto.getCountry());
         // Heavy check - can be avoided depending on business logic
         if (!users.isEmpty()){
             throw new BusinessApiException(
-                    String.format("found a user with same with the following name  %s and birth date %s",
+                    String.format("found a user with same with the following name  %s, birth date %s And country %s",
                             userDto.getName(),
-                            userDto.getBirthDate()),
+                            userDto.getBirthDate(),
+                            userDto.getCountry()),
                     HttpStatus.CONFLICT);
         }
         User user = userMapper.userDtoToUser(userDto);

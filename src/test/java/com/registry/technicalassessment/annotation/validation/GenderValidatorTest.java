@@ -26,8 +26,8 @@ public class GenderValidatorTest {
     public void shouldBeValidGender(){
         UserDto userDto = new UserDto();
         userDto.setName("youness");
-        userDto.setCountry("france");
-        userDto.setGender("male");
+        userDto.setCountry("FR");
+        userDto.setGender("M");
         userDto.setBirthDate(LocalDate.of(1997,7,14));
 
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
@@ -38,7 +38,7 @@ public class GenderValidatorTest {
     public void shouldNotBeValidGender(){
         UserDto userDto = new UserDto();
         userDto.setName("youness");
-        userDto.setCountry("fr");
+        userDto.setCountry("FR");
         userDto.setGender("none");
         userDto.setBirthDate(LocalDate.of(1997,7,14));
 

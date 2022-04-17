@@ -2,10 +2,7 @@ package com.registry.technicalassessment.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -17,7 +14,13 @@ public class User {
     private long id;
     private String name;
     private LocalDate birthDate;
-    private String country;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_code")
+    private Country country;
+
     private String phoneNumber;
-    private String gender;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 }

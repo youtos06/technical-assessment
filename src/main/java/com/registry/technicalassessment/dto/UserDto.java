@@ -2,7 +2,6 @@ package com.registry.technicalassessment.dto;
 
 
 import com.registry.technicalassessment.annotation.contraint.AdultConstraint;
-import com.registry.technicalassessment.annotation.contraint.CountryConstraint;
 import com.registry.technicalassessment.annotation.contraint.GenderConstraint;
 import com.registry.technicalassessment.annotation.contraint.PhoneConstraint;
 import lombok.AllArgsConstructor;
@@ -29,7 +28,6 @@ public class UserDto {
     private LocalDate birthDate;
 
     @NotNull(message = "Country is mandatory")
-    @CountryConstraint
     private String country;
 
     @GenderConstraint

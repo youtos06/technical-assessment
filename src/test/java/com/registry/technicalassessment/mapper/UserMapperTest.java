@@ -1,41 +1,41 @@
 package com.registry.technicalassessment.mapper;
 
 import com.registry.technicalassessment.dto.UserDto;
+import com.registry.technicalassessment.model.Country;
 import com.registry.technicalassessment.model.User;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.runner.RunWith;
+import org.mapstruct.factory.Mappers;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 class UserMapperTest {
 
-    @Autowired
-    UserMapper userMapper;
+    @Spy
+    UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     @Test
     void shouldReturnUserDtoFromUser() {
-        UserDto userDto_1 = new UserDto();
-        userDto_1.setName("youness");
-        userDto_1.setCountry("france");
-        userDto_1.setBirthDate(LocalDate.of(1997,7,14));
-        userDto_1.setPhoneNumber("+363798876543");
+        User user = new User();
+        user.setId(1);
+        user.setName("youness");
+        Country country = new Country();
+        country.setCode("FR");
+        user.setCountry(country);
+        user.setBirthDate(LocalDate.of(1997,7,14));
+        user.setPhoneNumber("+363798876543");
 
-        User user_1 = new User();
-        user_1.setId(1);
-        user_1.setName("youness");
-        user_1.setCountry("france");
-        user_1.setBirthDate(LocalDate.of(1997,7,14));
-        user_1.setPhoneNumber("+363798876543");
+        UserDto userDto = userMapper.userToUserDto(user);
 
-        UserDto userDto = userMapper.userToUserDto(user_1);
-
-        assertEquals(userDto.getName(),user_1.getName());
-        assertEquals(userDto.getBirthDate(),user_1.getBirthDate());
+        assertNotNull(userDto);
+        assertEquals(user.getName(),userDto.getName());
+        assertEquals(user.getBirthDate(),userDto.getBirthDate());
     }
 
     @Test
@@ -45,23 +45,19 @@ class UserMapperTest {
 
     @Test
     void shouldReturnUserFromUserDto() {
-        UserDto userDto_1 = new UserDto();
-        userDto_1.setName("youness");
-        userDto_1.setCountry("france");
-        userDto_1.setBirthDate(LocalDate.of(1997,7,14));
-        userDto_1.setPhoneNumber("+363798876543");
+        UserDto userDto = new UserDto();
+        userDto.setName("youness");
+        userDto.setCountry("FR");
+        userDto.setBirthDate(LocalDate.of(1997,7,14));
+        userDto.setPhoneNumber("+363798876543");
 
-        User user_1 = new User();
-        user_1.setId(1);
-        user_1.setName("youness");
-        user_1.setCountry("france");
-        user_1.setBirthDate(LocalDate.of(1997,7,14));
-        user_1.setPhoneNumber("+363798876543");
 
-        User user = userMapper.userDtoToUser(userDto_1);
+        User user = userMapper.userDtoToUser(userDto);
 
-        assertEquals(user.getName(),userDto_1.getName());
-        assertEquals(user.getBirthDate(),userDto_1.getBirthDate());
+        assertNotNull(user);
+        assertEquals(userDto.getName(),user.getName());
+        assertEquals(userDto.getBirthDate(),user.getBirthDate());
+        assertEquals(userDto.getCountry(),user.getCountry().getCode());
     }
 
     @Test
