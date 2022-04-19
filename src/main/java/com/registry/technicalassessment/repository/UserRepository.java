@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
     List<User> findUserByName(String name);
-    List<User> findUserByNameAndBirthDateAndCountry_code(String name, LocalDate birthDate,String code);
+    List<User> findUserByNameAndBirthDateAndCountryCode(String name, LocalDate birthDate, String code);
     Optional<User> findById(Long aLong);
 }

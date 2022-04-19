@@ -23,7 +23,7 @@ public class UserValidator{
      * @param userDto user dto to validate
      */
     public void validate(UserDto userDto){
-        CountryAllowed countryAllowed =  countryAllowedRepository.findByCountry_code(userDto.getCountry());
+        CountryAllowed countryAllowed =  countryAllowedRepository.findByCountryCode(userDto.getCountry());
 
         if (Objects.isNull(countryAllowed)){
             throw new BusinessApiException("Country not allowed : " + userDto.getCountry(), HttpStatus.BAD_REQUEST);

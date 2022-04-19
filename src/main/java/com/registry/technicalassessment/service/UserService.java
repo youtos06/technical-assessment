@@ -76,7 +76,7 @@ public class UserService {
      */
     public UserDto saveUser(UserDto userDto){
         userValidator.validate(userDto);
-        List<User> users = userRepository.findUserByNameAndBirthDateAndCountry_code(
+        List<User> users = userRepository.findUserByNameAndBirthDateAndCountryCode(
                 userDto.getName(),
                 userDto.getBirthDate(),
                 userDto.getCountry());

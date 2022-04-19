@@ -3,7 +3,6 @@ package com.registry.technicalassessment.controller;
 import com.registry.technicalassessment.annotation.LogExecutionTime;
 import com.registry.technicalassessment.dto.UserDto;
 import com.registry.technicalassessment.exception.ApiExceptionResponse;
-import com.registry.technicalassessment.exception.BusinessApiException;
 import com.registry.technicalassessment.holder.ApiPath;
 import com.registry.technicalassessment.service.UserService;
 import io.swagger.annotations.ApiOperation;
