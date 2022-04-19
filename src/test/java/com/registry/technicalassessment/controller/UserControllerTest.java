@@ -8,12 +8,12 @@ import com.registry.technicalassessment.exception.BusinessApiException;
 import com.registry.technicalassessment.holder.ApiPath;
 import com.registry.technicalassessment.service.UserService;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,9 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,8 +33,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(MockitoJUnitRunner.class)
-public class UserControllerTest {
+@ExtendWith(MockitoExtension.class)
+class UserControllerTest {
 
     @InjectMocks
     private UserController userController;
@@ -47,8 +46,8 @@ public class UserControllerTest {
 
     ObjectMapper objectMapper ;
 
-    @Before
-    public void setUp(){
+    @BeforeEach
+    void setUp(){
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JSR310Module());
         mockMvc = MockMvcBuilders.standaloneSetup(userController).setControllerAdvice(new ApiExceptionHandler()).build();
@@ -56,7 +55,7 @@ public class UserControllerTest {
 
 
     @Test
-    public void shouldReturnAllUsers() throws Exception {
+    void shouldReturnAllUsers() throws Exception {
         List<UserDto> usersDto = getUsersDto();
 
         when(userService.retrieveAllUsers()).thenReturn(usersDto);
@@ -67,7 +66,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnOneUserById() throws Exception {
+    void shouldReturnOneUserById() throws Exception {
         when(userService.retrieveUserById(1)).thenReturn(getUsersDto().get(0));
 
         mockMvc.perform(get(ApiPath.USER+ApiPath.USER_BY_ID,1))
@@ -76,7 +75,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnNotFoundForUserWrongId() throws Exception {
+    void shouldReturnNotFoundForUserWrongId() throws Exception {
         when(userService.retrieveUserById(10))
                 .thenThrow(new BusinessApiException(
                         String.format("No users with the following id: %s",10)
@@ -90,7 +89,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnUsersByName() throws Exception {
+    void shouldReturnUsersByName() throws Exception {
         String name = "youness";
         List<UserDto> usersDto = List.of(getUsersDto().get(0));
 
@@ -104,7 +103,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldSaveUser() throws Exception {
+    void shouldSaveUser() throws Exception {
         UserDto userDto_1 = new UserDto();
         userDto_1.setName("youness");
         userDto_1.setCountry("FR");
@@ -119,7 +118,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void throwBusinessException_when_save_nonFrench_user() throws Exception {
+    void throwBusinessException_when_save_nonFrench_user() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setName("youness");
         userDto.setCountry("MR");
@@ -139,7 +138,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldNotSaveNonAdultUser() throws Exception {
+    void shouldNotSaveNonAdultUser() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setName("youness");
         userDto.setCountry("MR");
@@ -154,7 +153,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void throwBusinessException_when_user_notFound_byName() throws Exception {
+    void throwBusinessException_when_user_notFound_byName() throws Exception {
         String name = "zoro";
 
         when(userService.retrieveUserByName(name)).thenThrow(
@@ -172,7 +171,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void throwBusinessException_when_save_existent_user() throws Exception {
+    void throwBusinessException_when_save_existent_user() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setName("youness");
         userDto.setCountry("FR");

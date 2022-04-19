@@ -1,8 +1,8 @@
 package com.registry.technicalassessment.annotation.validation;
 
 import com.registry.technicalassessment.dto.UserDto;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -13,17 +13,17 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MandatoryPropertyValidatorTest {
+class MandatoryPropertyValidatorTest {
     private Validator validator;
 
-    @Before
-    public void setUp(){
+    @BeforeEach
+    void setUp(){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
 
     @Test
-    public void shouldBeValidUser(){
+    void shouldBeValidUser(){
         UserDto userDto = new UserDto();
         userDto.setName("youness");
         userDto.setCountry("FR");
@@ -34,7 +34,7 @@ public class MandatoryPropertyValidatorTest {
     }
 
     @Test
-    public void shouldNotBeValidUser(){
+    void shouldNotBeValidUser(){
         UserDto userDto = new UserDto();
         userDto.setCountry("FR");
         userDto.setBirthDate(LocalDate.of(1997,7,14));

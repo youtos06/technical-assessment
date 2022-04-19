@@ -7,11 +7,12 @@ import com.registry.technicalassessment.model.Country;
 import com.registry.technicalassessment.model.User;
 import com.registry.technicalassessment.repository.UserRepository;
 import com.registry.technicalassessment.validator.UserValidator;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -19,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class UserServiceTest {
+@ExtendWith(MockitoExtension.class)
+class UserServiceTest {
 
     @InjectMocks
     private UserService userService;
@@ -35,7 +36,7 @@ public class UserServiceTest {
     private UserValidator userValidator;
 
     @Test
-    public void shouldReturnAllUsers() {
+    void shouldReturnAllUsers() {
         List<UserDto> usersDto = getUsersDto();
         List<User> users = getUsers();
 
@@ -56,7 +57,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldReturnUsersByName(){
+    void shouldReturnUsersByName(){
         User user = new User();
         user.setId(1);
         user.setName("youness");
@@ -86,7 +87,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldReturnUserById(){
+    void shouldReturnUserById(){
         long id = 1;
         UserDto userDto = new UserDto();
         userDto.setName("youness");
@@ -114,7 +115,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldSaveUser(){
+    void shouldSaveUser(){
         UserDto userDto = new UserDto();
         userDto.setName("youness");
         userDto.setCountry("FR");
@@ -140,7 +141,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void throwBusinessException_when_no_users(){
+    void throwBusinessException_when_no_users(){
         UserDto userDto = new UserDto();
         userDto.setName("youness");
         userDto.setCountry("IT");
@@ -153,7 +154,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void throwBusinessException_when_no_user_by_name(){
+    void throwBusinessException_when_no_user_by_name(){
         UserDto userDto = new UserDto();
         userDto.setName("youness");
         userDto.setCountry("IT");
@@ -165,7 +166,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void throwBusinessException_when_no_user_by_id(){
+    void throwBusinessException_when_no_user_by_id(){
         User user = new User();
         user.setId(1);
         user.setName("youness");
@@ -180,7 +181,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void throwBusinessException_when_user_exist(){
+    void throwBusinessException_when_user_exist(){
         User user = new User();
         user.setId(1);
         user.setName("youness");
@@ -196,7 +197,7 @@ public class UserServiceTest {
         userDto.setBirthDate(LocalDate.of(1997,7,14));
         userDto.setPhoneNumber("+363798876543");
 
-        when(userRepository.findUserByNameAndBirthDateAndCountry_code(
+        when(userRepository.findUserByNameAndBirthDateAndCountryCode(
                 userDto.getName(),
                 userDto.getBirthDate(),
                 userDto.getCountry()
